@@ -27,7 +27,3 @@ fn main() {
 
 	println(token.str())
 }
-
-fn next_token() {
-
-}

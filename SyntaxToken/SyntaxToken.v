@@ -20,16 +20,16 @@ fn get_kind() SyntaxKind {
 
 pub fn (st SyntaxToken) str() string {
 	kind := match st.kind {
-		SyntaxKind.zero {
+		.zero {
 			'zero'
 		}
-		SyntaxKind.one {
+		.one {
 			'one'
 		}
-		SyntaxKind.two {
+		.two {
 			'two'
 		}
-		SyntaxKind.three {
+		.three {
 			'three'
 		}
 		else{
