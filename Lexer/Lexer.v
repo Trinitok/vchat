@@ -3,6 +3,7 @@ module Lexer
 import SyntaxToken
 
 struct Lexer {
+pub:
 	_text string
 	current string
 mut:
@@ -13,12 +14,18 @@ fn (lex mut Lexer) next() {
 	lex._position ++
 }
 
-pub fn (lex Lexer) next_token() SyntaxToken.SyntaxToken {
+pub fn (lex &Lexer) next_token() SyntaxToken.SyntaxToken {
 	//  <greeting>
 	//  hello
 
+	//  if it is a proper greeting (either hello or Hello)
+	//  then set the _text to be the total_length - current_length
+	//  since this is just hellp, the length will always be 5
+	//  can generalize by getting the length of the current
 	if isProperGreeting(lex.current) {
-
+		start := lex._current.len
+		end := lex._text.len
+		text := lex._text[start, end]
 	}
 	
 
