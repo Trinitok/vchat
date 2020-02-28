@@ -5,6 +5,7 @@ pub:
 	kind SyntaxKind
 	position int
 	text string
+	value string
 }
 
 pub enum SyntaxKind {
@@ -12,6 +13,9 @@ pub enum SyntaxKind {
 	one
 	two
 	three
+	NumberToken
+	WhitespaceToken
+	EndSentenceToken
 }
 
 fn get_kind() SyntaxKind {
