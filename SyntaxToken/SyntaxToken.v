@@ -13,17 +13,20 @@ pub enum SyntaxKind {
 	one
 	two
 	three
+	greeting_token
 	NumberToken
 	WhitespaceToken
 	EndSentenceToken
+	BadToken
 }
 
-fn get_kind() SyntaxKind {
-	return .one
+fn (st SyntaxToken) get_kind() SyntaxKind {
+	return st.kind
 }
 
-pub fn (st SyntaxToken) str() string {
-	kind := match st.kind {
+//  toString function for syntax kind
+pub fn (sk SyntaxKind) str() string {
+	return match sk {
 		.zero {
 			'zero'
 		}
@@ -36,10 +39,29 @@ pub fn (st SyntaxToken) str() string {
 		.three {
 			'three'
 		}
+		.greeting_token {
+			'greeting token'
+		}
+		.NumberToken {
+			'NumberToken'
+		}
+		.WhitespaceToken {
+			'white space'
+		}
+		.EndSentenceToken {
+			'end of sentence'
+		}
+		.BadToken {
+			'bad token'
+		}
 		else{
 			'unknown'
 		}
 	}
+}
+
+pub fn (st SyntaxToken) str() string {
+	kind := st.kind.str()
 
 	mut ret_str := 'SyntaxToken { '
 	ret_str += kind

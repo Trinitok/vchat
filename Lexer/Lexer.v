@@ -2,7 +2,7 @@ module Lexer
 
 import SyntaxToken
 
-struct Lexer {
+pub struct Lexer {
 pub:
 	_text string
 	current string
@@ -14,7 +14,7 @@ fn (lex mut Lexer) next() {
 	lex._position ++
 }
 
-pub fn (lex &Lexer) next_token() SyntaxToken.SyntaxToken {
+pub fn (lex mut Lexer.Lexer) next_token() SyntaxToken.SyntaxToken {
 	//  <greeting>
 	//  hello
 
@@ -25,42 +25,42 @@ pub fn (lex &Lexer) next_token() SyntaxToken.SyntaxToken {
 	if is_proper_greeting(lex.current) {
 		start := lex.current.len
 		end := lex._text.len
-		text := lex._text[start, end]
+		text := lex._text[start..end]
 		return SyntaxToken.SyntaxToken{
-			kind: SyntaxKind.NumberToken 
-			position: start 
+			kind: .greeting_token 
+			position: start + 1
 			text: text
-			value: value
+			value: 'value'
 		}
 	}
 
-	if lex.current.is_space() {
+	if lex.current.bytes()[0].is_space() {
 		start := lex.current.len
 		end := lex._text.len
-		text := lex._text[start, end]
+		text := lex._text[start..end]
 		return SyntaxToken.SyntaxToken{
-			kind: SyntaxKind.WhitespaceToken 
+			kind: .WhitespaceToken 
 			position: start 
 			text: text
-			value: value
+			value: 'value'
 		}
 	}
 	
 	if is_end_sentence(lex.current) {
 		start := lex.current.len
 		end := lex._text.len
-		text := lex._text[start, end]
+		text := lex._text[start..end]
 		return SyntaxToken.SyntaxToken{
-			kind: SyntaxKind.EndSentenceToken 
+			kind: .EndSentenceToken 
 			position: start 
-			text: text
-			value: value
+			text: 'eos'
+			value: 'voidptr(0)'
 		}
 	}
 
 	return SyntaxToken.SyntaxToken{
-		kind : SyntaxToken.SyntaxKind.zero
-		position: 0
+		kind : .BadToken
+		position: lex._position++
 		text: 'random text' 
 	}
 }
