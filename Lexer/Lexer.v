@@ -14,7 +14,7 @@ fn (lex mut Lexer) next() {
 }
 
 fn (lex mut Lexer) get_current() string {
-	if lex._position > lex._text.len {
+	if lex._position >= lex._text.len {
 		return '.'
 	}
 	return lex._text[lex._position].str()
@@ -34,7 +34,7 @@ pub fn (lex mut Lexer.Lexer) next_token() SyntaxToken.SyntaxToken {
 		text := lex._text[start..end]
 		return SyntaxToken.SyntaxToken{
 			kind: .greeting_token 
-			position: start + 1
+			position: start
 			text: text
 			value: 'value'
 		}
@@ -53,7 +53,7 @@ pub fn (lex mut Lexer.Lexer) next_token() SyntaxToken.SyntaxToken {
 		}
 	}
 	
-	if is_end_sentence(lex.get_current()) {
+	if is_end_sentence(mut lex) {
 		start := lex._position
 		end := lex._text.len
 		text := lex._text[start..end]
@@ -73,40 +73,41 @@ pub fn (lex mut Lexer.Lexer) next_token() SyntaxToken.SyntaxToken {
 }
 
 //todo put this in an array for optimization
-fn is_proper_greeting(lex mut &Lexer) bool{
-	if lex.get_current().to_lower().contains('h') {
-		lex.next()
+fn is_proper_greeting(lex mut Lexer) bool{
+	greeting_arr := ['hello']
+	greeting_end_pos := lex._position + 5
+	if greeting_end_pos > lex._text.len {
+		return false
 	}
-	if lex.get_current().to_lower().contains('e') {
-		lex.next()
-	}
-	if lex.get_current().to_lower().contains('l') {
-		lex.next()
-	}
-	if lex.get_current().to_lower().contains('l') {
-		lex.next()
-	}
-	if lex.get_current().to_lower().contains('o') {
-		lex.next()
+	current_greeting := lex._text[lex._position..greeting_end_pos]
+	// if lex.get_current().to_lower().contains('h') {
+	// 	lex.next()
+	// }
+	// if lex.get_current().to_lower().contains('e') {
+	// 	lex.next()
+	// }
+	// if lex.get_current().to_lower().contains('l') {
+	// 	lex.next()
+	// }
+	// if lex.get_current().to_lower().contains('l') {
+	// 	lex.next()
+	// }
+	// if lex.get_current().to_lower().contains('o') {
+	// 	lex.next()
+	// 	return true
+	// }
+	if current_greeting in greeting_arr {
+		lex._position += 5
 		return true
 	}
 	return false
 }
 
 //todo put this in an array for optimization
-fn is_end_sentence(currentToken string) bool{
-	return match currentToken {
-		'.' {
-			true
-		}
-		'!' {
-			true
-		}
-		'?' {
-			true
-		}
-		else {
-			false
-		}
-	}
+fn is_end_sentence(lex mut &Lexer) bool{
+	lex.next()
+	end_sentence_chars := ['.', '!', '?']
+	current_token := lex.get_current()
+	return current_token in end_sentence_chars
+	
 }

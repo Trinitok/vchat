@@ -47,9 +47,14 @@ fn main() {
 			if current_token.kind == .BadToken {
 				break
 			}
-			if current_token.kind == .EndSentenceToken {
+			if check_sentence_end(current_token, test_repl) {
 				println('the sentence has ended')
+				break
 			}
 		}		
 	}
+}
+
+fn check_sentence_end(token SyntaxToken.SyntaxToken, lex Lexer.Lexer) bool {
+	return token.kind == .EndSentenceToken || lex._position >= lex._text.len
 }
