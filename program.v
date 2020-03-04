@@ -39,7 +39,6 @@ fn main() {
 		}
 		mut test_repl := Lexer.Lexer{
 			_text: line
-			current: line
 			_position: 0
 		}
 		for {
