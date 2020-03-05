@@ -68,3 +68,7 @@ pub fn (st SyntaxToken) str() string {
 	ret_str = ret_str + ' ' + st.position.str() + ' ' + st.text + ' }'
 	return ret_str
 }
+
+pub fn (st SyntaxToken) is_bad_token() bool {
+	return st.kind == .BadToken
+}

@@ -2,12 +2,14 @@ import Lexer
 import SyntaxToken
 
 pub struct Parser {
+	lex Lexer.Lexer
+	tokens []SyntaxToken.SyntaxToken
+	current SyntaxToken.SyntaxToken
 }
 
 pub (parser Parser) construct_parser(text string) {
-	tokens := []
 
-	lexer := Lexer.Lexer {
+	parser.lex := Lexer.Lexer {
 		_text: text
 		_position: 0
 	}
@@ -17,11 +19,11 @@ pub (parser Parser) construct_parser(text string) {
 	for {
 		token = lexer.next()
 
-		if token.kind != SyntaxKind.WhitespaceToken && token.kind != SyntaxKind.BadToken {
-			tokens << token
+		if token.kind != SyntaxKind.WhitespaceToken && token.is_bad_token() {
+			parser.tokens << token
 		}
 
-		if token.kind != SyntaxKind.EndSentenceToken || token.kind != SyntaxKind.BadToken {
+		if token.kind != SyntaxKind.EndSentenceToken || token.is_bad_token() {
 			println('parser has finished')
 			break
 		}
@@ -29,5 +31,11 @@ pub (parser Parser) construct_parser(text string) {
 }
 
 fn (par Parser) peek(offset int) SyntaxToken.SyntaxToken {
-	
+	index := par.lex._position + offset
+	if index >= par.tokens.len {
+		return par.tokens[tokens.len - 1]
+	}
+
+	return par.tokens[index]
 }
+

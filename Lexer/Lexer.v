@@ -49,7 +49,7 @@ pub fn (lex mut Lexer.Lexer) next_token() SyntaxToken.SyntaxToken {
 			kind: .WhitespaceToken 
 			position: start 
 			text: text
-			value: 'value'
+			value: ' '
 		}
 	}
 	
@@ -61,14 +61,12 @@ pub fn (lex mut Lexer.Lexer) next_token() SyntaxToken.SyntaxToken {
 			kind: .EndSentenceToken 
 			position: start 
 			text: 'eos'
-			value: 'voidptr(0)'
 		}
 	}
 
 	return SyntaxToken.SyntaxToken{
 		kind : .BadToken
 		position: lex._position ++
-		text: 'random text' 
 	}
 }
 

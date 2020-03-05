@@ -30,6 +30,7 @@ fn main() {
 	for {
 		print('>>>')
 		line := os.get_line()
+		
 		if line.bytes()[0].is_space() {
 			panic('line needs to be more than a space')
 		}
