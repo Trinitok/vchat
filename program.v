@@ -59,3 +59,9 @@ fn main() {
 fn check_sentence_end(token SyntaxToken.SyntaxToken, lex Lexer.Lexer) bool {
 	return token.kind == .EndSentenceToken || lex._position >= lex._text.len
 }
+
+fn pretty_print(node SyntaxToken.SyntaxNodeInter, indent string) {
+	println(node.kind)
+	println(' ')
+	println(node.value)
+}

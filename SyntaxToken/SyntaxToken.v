@@ -1,5 +1,9 @@
 module SyntaxToken
 
+pub interface SyntaxNodeInter {
+	get_children() []SyntaxNodeInter
+}
+
 pub struct SyntaxToken {
 pub:
 	kind SyntaxKind
@@ -18,6 +22,10 @@ pub enum SyntaxKind {
 	WhitespaceToken
 	EndSentenceToken
 	BadToken
+}
+
+pub fn (st SyntaxToken) get_children() []SyntaxNodeInter {
+	return []
 }
 
 fn (st SyntaxToken) get_kind() SyntaxKind {
@@ -72,3 +80,4 @@ pub fn (st SyntaxToken) str() string {
 pub fn (st SyntaxToken) is_bad_token() bool {
 	return st.kind == .BadToken
 }
+
